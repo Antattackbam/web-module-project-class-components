@@ -1,28 +1,38 @@
 import React from "react";
-import Todo from "./Todo";
 
-const TodoList = (props) => {
-  console.log(props.task)
+class TodoList extends React.Component {
+  constructor() {
+    super();
+    this.state = { 
+      task: "" 
+    };
+  }
 
-  return (
-    <div>
-      <form onSubmit={props.submitHandler}>
-        <input
-          onChange={props.changeHandler}
-          type="text"
-          value={props.task}
-          name="task"
-        />
-        <button type="submit">Add Task</button>
-        <button>Clear Completed</button>
-      </form>
+  changeHandler = (e) => {
+
+    this.setState({ task: e.target.value });
+  };
+
+  submitHandler = (e) => {
+    const t = this.state.task
+  
+    e.preventDefault();
+    this.props.addTask(t);
+    alert('Task added: ' + t)
+    this.setState({task: ''})
+  };
+
+  render() {
+    return (
       <div>
-        {props.data.dummyData.map((t) => {
-          return <Todo key={t.id} task={t.task} />;
-        })}
+        <form onSubmit={this.submitHandler}>
+          <input onChange={this.changeHandler} value={this.state.task} type="text" name="task" />
+          <button type="submit">Add Task</button>
+          <button>Clear Completed</button>
+        </form>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default TodoList;
