@@ -13,6 +13,12 @@ class TodoList extends React.Component {
     this.setState({ task: e.target.value });
   };
 
+  completedHandler = (e) => {
+    e.preventDefault()
+    this.props.clearCompleted()
+  }
+
+
   submitHandler = (e) => {
     const t = this.state.task
   
@@ -28,7 +34,7 @@ class TodoList extends React.Component {
         <form onSubmit={this.submitHandler}>
           <input onChange={this.changeHandler} value={this.state.task} type="text" name="task" />
           <button type="submit">Add Task</button>
-          <button>Clear Completed</button>
+          <button onClick={this.completedHandler}>Clear Completed</button>
         </form>
       </div>
     );

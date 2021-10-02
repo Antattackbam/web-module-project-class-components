@@ -26,12 +26,10 @@ class App extends React.Component {
   };
 
   toggleCompleted = (id) => {
-    console.log(id)
     this.setState({
       ...this.state,
       tasks: this.state.tasks.map( t => {
         if (t.id === id){
-          console.log(t.completed)
           return ({
             ...t,
             completed: !t.completed
@@ -41,6 +39,14 @@ class App extends React.Component {
     })
   }
 
+  clearCompleted = () => {
+    this.setState({
+      ...this.state,
+      tasks: this.state.tasks.filter( task => {
+        return(!task.completed)
+      })
+    })
+  }
 
   render() {
     return (
@@ -48,13 +54,14 @@ class App extends React.Component {
         <h2>Welcome to your Todo App!</h2>
         <TodoList
           changeHandler={this.changeHandler}
+          clearCompleted={this.clearCompleted}
           addTask={this.addTask}
           submitHandler={this.submitHandler}
           data={this.state.tasks}
         />
         <div>
           {this.state.tasks.map(t => (
-            <Todo toggleCompleted={this.toggleCompleted} completed={t.completed} id={t.id} key={t.id} task={t.task} />
+            <Todo toggleCompleted={this.toggleCompleted} clearCompleted={this.clearCompleted} completed={t.completed} id={t.id} key={t.id} task={t.task} />
           ))}
   
         </div>
