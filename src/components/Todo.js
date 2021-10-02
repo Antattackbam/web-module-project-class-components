@@ -1,8 +1,13 @@
 import React from 'react'
 
 const Todo = (props) =>{
+
+    const clickHandler = () => {
+        props.toggleCompleted(props.id)
+    }
+
     return(
-        <div key = {props.id}>
+        <div onClick={clickHandler} key = {props.id} className={`${props.completed ? 'completed' : ''}`}>
             <p>{props.task}</p>
         </div>
     )

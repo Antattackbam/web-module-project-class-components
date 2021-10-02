@@ -3,6 +3,7 @@ import dummyData from "./components/dummyData";
 import Home from "./components/styled-components";
 import TodoList from "./components/TodoList";
 import Todo from "./components/Todo";
+import './components/Todo.css'
 
 class App extends React.Component {
   // you will need a place to store your state in this component.
@@ -11,11 +12,9 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = { tasks: dummyData };
-    console.log(this.state);
   }
 
   addTask = (taskName) => {
-    console.log(taskName)
     const newTask = {
       task: taskName,
       id: Date.now(),
@@ -24,8 +23,23 @@ class App extends React.Component {
     this.setState({  
       tasks: [...this.state.tasks, newTask] 
     });
-    console.log(this.state)
   };
+
+  toggleCompleted = (id) => {
+    console.log(id)
+    this.setState({
+      ...this.state,
+      tasks: this.state.tasks.map( t => {
+        if (t.id === id){
+          console.log(t.completed)
+          return ({
+            ...t,
+            completed: !t.completed
+          })
+        } return t
+      })
+    })
+  }
 
 
   render() {
@@ -40,7 +54,7 @@ class App extends React.Component {
         />
         <div>
           {this.state.tasks.map(t => (
-            <Todo key={t.id} task={t.task} />
+            <Todo toggleCompleted={this.toggleCompleted} completed={t.completed} id={t.id} key={t.id} task={t.task} />
           ))}
   
         </div>
